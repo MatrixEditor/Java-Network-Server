@@ -53,7 +53,7 @@ public interface Stream {
     boolean closed();
 
     /**
-     * Here an Object is send out by using an {@link java.io.ObjectOutputStream} to a
+     * Here an Object is being sent out by using an {@link java.io.ObjectOutputStream} to a
      * specified client. Usually this Object is represented by an instance of a class
      * that extends a Packet.
      * @param packet the Object to send out

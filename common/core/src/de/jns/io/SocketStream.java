@@ -2,6 +2,7 @@ package de.jns.io;
 
 import de.jns.io.submission.Payload;
 import de.jns.io.submission.UploadPayload;
+import de.jns.monitoring.ExceptionHandler;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -13,7 +14,6 @@ import java.net.Socket;
  * <p>
  * Class description...
  *
- * @author
  * @version ...
  * @date 26.11.2020
  **/
@@ -29,7 +29,7 @@ public class SocketStream implements Stream {
 
     private Payload input;
 
-    private Runnable exceptionHandler;
+    private ExceptionHandler exceptionHandler;
 
     private String latest;
 
@@ -101,11 +101,11 @@ public class SocketStream implements Stream {
         }
     }
 
-    public void addExceptionHandler(Runnable runnable) {this.exceptionHandler = runnable;}
+    public void addExceptionHandler(ExceptionHandler runnable) {this.exceptionHandler = runnable;}
 
     @Override
     public void handleException() {
-        exceptionHandler.run();
+        exceptionHandler.onAction();
     }
 
     @Override

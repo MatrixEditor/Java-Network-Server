@@ -1,5 +1,7 @@
-package de.jns.io;
+package de.jns.defaultimpl;
 
+import de.jns.io.Firewall;
+import de.jns.io.SocketStream;
 import de.jns.io.submission.Payload;
 import de.jns.validation.ValidationResult;
 import de.jns.validation.Validator;
@@ -24,9 +26,11 @@ public class DefaultFirewall extends Firewall<SocketStream> {
     @Override
     public boolean check(Payload input) {
         //later
-        ValidationResult result = validator.validate();
+        //ValidationResult result = validator.validate();
+        //if (result.isValidate() == 1){
         LOGGER.log(Level.INFO, "Firewall checked");
-        return true;
+        return false;
+        //}
     }
 
     @Override

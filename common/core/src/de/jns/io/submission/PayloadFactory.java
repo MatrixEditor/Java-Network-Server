@@ -27,13 +27,15 @@ public class PayloadFactory {
     public UploadPayload createUpload(int tag, PublicKey publicKey,
                                       Packet ... packets) {
         var payload = new UploadPayload(packets);
-        payload.setPublicTag(createPublicTag(tag));
-        payload.addPublicKey(publicKey);
+        payload.setPublicTag(createPublicTag(tag))
+                .addPublicKey(publicKey);
+        /*
         try {
             payload.verify();
         } catch (IOException e) {
             logger.log(Level.WARNING, e.getLocalizedMessage());
         }
+         */
         return payload;
     }
 

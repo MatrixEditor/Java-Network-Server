@@ -13,7 +13,9 @@ import java.util.logging.Logger;
  **/
 public class LoggerFactory {
 
-    private static final DefaultLoggerFactory DEFAULT_LOGGER_FACTORY = new DefaultLoggerFactory();
+    private static ILoggerFactory iLoggerFactory;
+
+    private static int INITIAL_VALUE = 0;
 
     public static Logger getLogger(String name) {
         ILoggerFactory iLoggerFactory = getILoggerFactory();
@@ -25,7 +27,25 @@ public class LoggerFactory {
     }
 
     public static ILoggerFactory getILoggerFactory() {
-        return DEFAULT_LOGGER_FACTORY;
+        if (INITIAL_VALUE == 0) {
+            createLoggerFactory();
+        }
+
+        switch (INITIAL_VALUE){
+            case 1:
+                return ILoggerFactory.newFactory();
+            case 2:
+                return iLoggerFactory;
+            default:
+                throw new ExceptionInInitializerError("Warning: Cannot initialize factory");
+        }
+    }
+
+    private static void createLoggerFactory() {
+        if (iLoggerFactory == null) {
+            iLoggerFactory = ILoggerFactory.newFactory();
+            INITIAL_VALUE = 2;
+        } else INITIAL_VALUE = 1;
     }
 
 }

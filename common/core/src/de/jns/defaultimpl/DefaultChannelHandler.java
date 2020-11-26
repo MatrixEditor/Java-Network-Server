@@ -1,7 +1,11 @@
-package de.jns.io.channel;
+package de.jns.defaultimpl;
 
+import de.jns.annotations.Authors;
+import de.jns.io.Address;
+import de.jns.io.channel.Channel;
+import de.jns.io.channel.ChannelHandlerAdapter;
+import de.jns.io.channel.ChannelWorker;
 import de.jns.io.submission.Payload;
-import de.jns.io.submission.PayloadFactory;
 import de.jns.io.SocketStream;
 import de.jns.io.submission.UploadPayload;
 
@@ -13,22 +17,17 @@ DefaultChannelHandler in io.channel (Java-Network-Server)
 
 Class description...
 
-@author
 @version ...
 @date 26.11.2020
 **/
+@Authors
 public class DefaultChannelHandler extends ChannelHandlerAdapter<SocketStream> {
 
-    private final PayloadFactory payloadFactory = new PayloadFactory();
-
-    private final String[] Addressees = new String[2];
-
-    private final Channel<SocketStream> inputChannel;
-    private boolean print = false;
+    private boolean echo = false;
 
     public DefaultChannelHandler(Channel<SocketStream> channel) {
-            inputChannel = channel;
-        }
+        super(channel);
+    }
 
     @Override
     public void loop() {
@@ -47,12 +46,10 @@ public class DefaultChannelHandler extends ChannelHandlerAdapter<SocketStream> {
     @Override
     public void handleAfter(Payload input) {
         //TODO
-        if (print) {
-            System.out.println(input.toString());
-        }
-        //output(payloadFactory.createUpload(5, input.getPublicKey(), Packet.nullPacket()));
-    }
+        System.out.println(input.toString());
+        if (echo) output(payloadFactory.createUpload(5, input.getPublicKey(), input.getPackets()));
 
+    }
 
     @Override
     public <C extends ChannelWorker<SocketStream>>
@@ -69,13 +66,6 @@ public class DefaultChannelHandler extends ChannelHandlerAdapter<SocketStream> {
     }
 
     @Override
-    public <C extends ChannelWorker<SocketStream>>
-    DefaultChannelHandler addLast(C channel) {
-        channels.add(channels.size(), channel);
-        return this;
-    }
-
-    @Override
     public ChannelWorker<SocketStream> channel(int pos) {
         return channels.get(pos);
     }
@@ -87,7 +77,11 @@ public class DefaultChannelHandler extends ChannelHandlerAdapter<SocketStream> {
 
     @Override
     public DefaultChannelHandler input() {
-        if (!channel().stream().closed()) handle(filter(channel().input(), 0));
+        if (!channel().stream().closed()) {
+            Payload payload = channel().input();
+            payload = filter(payload, 0);
+            handle(payload);
+        }
         return this;
     }
 
@@ -102,8 +96,7 @@ public class DefaultChannelHandler extends ChannelHandlerAdapter<SocketStream> {
     public Payload filter(Payload input, int i) {
         if (!channel().stream().closed()) {
             if (!(i >= channels.size())) {
-                ChannelWorker.Restitution restitution = channel(i).act(input);
-                switch (restitution) {
+                switch (channel(i).act(input)) {
                     case CONTINUE:
                         if ((i + 1) >= channels.size()) return input;
                         return filter(input, ++i);
@@ -116,10 +109,7 @@ public class DefaultChannelHandler extends ChannelHandlerAdapter<SocketStream> {
         } else return null;
     }
 
-    @Override
-    public void onPrint() {
-        print = true;
-    }
+    public void onEcho() {echo = true;}
 
     @Override
     public DefaultChannelHandler open() {
@@ -135,7 +125,7 @@ public class DefaultChannelHandler extends ChannelHandlerAdapter<SocketStream> {
 
     }
 
-    public String[] getAddressees() {
+    public Address[] getAddressees() {
         return Addressees;
     }
 
@@ -144,9 +134,6 @@ public class DefaultChannelHandler extends ChannelHandlerAdapter<SocketStream> {
         channel().stream().out(p);
     }
 
-    public PayloadFactory getPayloadFactory() {
-        return payloadFactory;
-    }
 }
 
 

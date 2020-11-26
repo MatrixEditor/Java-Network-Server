@@ -1,9 +1,12 @@
 package de.jns;
 
 import de.jns.monitoring.ConsoleHandler;
+import de.jns.monitoring.LoggerFactory;
+import main.SampleServer;
 
 import java.util.Random;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 /**
  * Server in de.jns (Java-Network-Server)
@@ -31,13 +34,18 @@ public abstract class Server {
      */
     protected final ConsoleHandler consoleHandler = new ConsoleHandler(new Scanner(System.in));
 
-    protected Server() {
-    }
+    protected final Logger LOGGER = LoggerFactory.getLogger(Server.class);
+
+    protected ServerType serverType;
+
+    protected ServerMode serverMode;
+
+    protected Server() {}
 
     /**
      * A simple Function to start the server.
      */
-    protected abstract void power();
+    protected abstract void power_init();
 
     /**
      * A simple Function to shut down the Server instance.
@@ -50,6 +58,12 @@ public abstract class Server {
      */
     public abstract ServerType type();
 
+    /**
+     * The name mapped as an integer.
+     */
     public abstract int name();
+
+
+    public abstract void setMode(ServerMode mode);
 
 }

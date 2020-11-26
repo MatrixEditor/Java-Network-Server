@@ -1,7 +1,10 @@
 package de.jns;
 
+import de.jns.defaultimpl.DefaultMacro;
+import de.jns.io.Address;
 import de.jns.io.Stream;
 import de.jns.io.channel.ChannelHandler;
+import de.jns.monitoring.ExceptionHandler;
 import de.jns.monitoring.LoggerFactory;
 
 import java.net.Socket;
@@ -29,7 +32,7 @@ public abstract class SocketServer<C extends ChannelHandler<S>, S extends Stream
      * Pos 0: Server -- Address.
      * Pos 1: Client -- Address.
      */
-    protected final HashMap<String[], C> channelHandlers = new LinkedHashMap<>();
+    protected final HashMap<Address[], C> channelHandlers = new LinkedHashMap<>();
 
     protected static final Logger LOGGER = LoggerFactory.getLogger(SocketServer.class);
 
@@ -41,7 +44,7 @@ public abstract class SocketServer<C extends ChannelHandler<S>, S extends Stream
         PORT = port;
     }
 
-    public abstract void addExceptionHandler(C channelHandler, Runnable eHandler);
+    public abstract void addExceptionHandler(C channelHandler, ExceptionHandler eHandler);
 
     public abstract SocketServer<C, S> start();
 

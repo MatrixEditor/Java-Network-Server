@@ -11,7 +11,6 @@ import java.util.logging.Logger;
  * <p>
  * Class description...
  *
- * @author
  * @version ...
  * @date 26.11.2020
  **/

@@ -27,7 +27,7 @@ public interface Payload extends Serializable {
 
     void addPublicKey(PublicKey publicKey);
 
-    Payload addPacket(@Packable() Packet packet);
+    Payload addPacket(Packet packet);
 
     Payload setPublicTag(String publicTag);
 }

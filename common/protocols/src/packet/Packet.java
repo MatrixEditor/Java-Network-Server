@@ -3,6 +3,7 @@ package packet;
 
 import packet.types.PacketType;
 
+@Packable
 public abstract class Packet implements Container {
 
     public static final Packet NULL_PACKET = nullPacket();

@@ -1,4 +1,6 @@
-package de.jns;
+package de.jns.defaultimpl;
+
+import de.jns.Macro;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executors;

@@ -21,13 +21,13 @@ public class UploadPayload implements Payload {
 
     private String publicTag;
 
-    @Packable() private final Packet[] packets;
+    private final Packet[] packets;
 
     public UploadPayload(int max_size) {
         packets = new Packet[max_size];
     }
 
-    public UploadPayload(@Packable() Packet...packets1) {
+    public UploadPayload(Packet...packets1) {
         packets = packets1;
     }
 
@@ -35,7 +35,7 @@ public class UploadPayload implements Payload {
         this.publicKey = publicKey;
     }
 
-    public UploadPayload addPacket(@Packable() Packet packet) {
+    public UploadPayload addPacket(Packet packet) {
         if (!full()) {
             packets[last()] = packet;
         }

@@ -13,4 +13,8 @@ import java.util.logging.Logger;
  **/
 public interface ILoggerFactory {
     Logger getLogger(String name);
+
+    static ILoggerFactory newFactory() {
+        return Logger::getLogger;
+    }
 }

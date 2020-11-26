@@ -1,10 +1,12 @@
-package de.jns;
+package de.jns.defaultimpl;
 
-import de.jns.io.DefaultCertificateHandler;
-import de.jns.io.DefaultFirewall;
+import de.jns.ServerMode;
+import de.jns.SocketServer;
+import de.jns.annotations.Authors;
+import de.jns.io.Address;
 import de.jns.io.SocketStream;
 import de.jns.io.channel.ChannelAdapter;
-import de.jns.io.channel.DefaultChannelHandler;
+import de.jns.monitoring.ExceptionHandler;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -16,17 +18,19 @@ import java.util.logging.Level;
  * <p>
  * Class description...
  *
- * @author
  * @version ...
  * @date 26.11.2020
  **/
+@Authors
 public class DefaultSocketServer extends SocketServer<DefaultChannelHandler, SocketStream> {
 
     private ServerSocket serverSocket;
 
+    private ServerMode serverMode;
 
     public DefaultSocketServer(int port) {
         super(port);
+        macro.open();
         try {
             serverSocket = new ServerSocket(port);
         } catch (IOException e) {
@@ -35,7 +39,7 @@ public class DefaultSocketServer extends SocketServer<DefaultChannelHandler, Soc
     }
 
     @Override
-    public void addExceptionHandler(DefaultChannelHandler channelHandler, Runnable eHandler) {
+    public void addExceptionHandler(DefaultChannelHandler channelHandler, ExceptionHandler eHandler) {
         channelHandler.channel().stream().addExceptionHandler(eHandler);
     }
 
@@ -52,12 +56,22 @@ public class DefaultSocketServer extends SocketServer<DefaultChannelHandler, Soc
                             new SocketStream(accept())))
                     .add(new DefaultFirewall())
                     .add(new DefaultCertificateHandler());
+            switch (serverMode) {
+                case ECHO:
+                    inputHandler.onEcho();
+                    break;
+                case NONE:
+                default:
+                    break;
+            }
             LOGGER.log(Level.INFO, "New InputHandler");
-            addExceptionHandler(inputHandler, () -> inputHandler.monitor(
-                    () -> erase(inputHandler)));
             channelHandlers.put(inputHandler.getAddressees(), inputHandler);
-            macro.exec(inputHandler::open);
-            macro.execAsync(() -> inputHandler.input().loop());
+            inputHandler.open();
+            addExceptionHandler(inputHandler,
+                    () -> inputHandler.monitor(
+                        () -> erase(inputHandler)));
+            macro.execAsync(
+                    () -> inputHandler.input().loop());
         }
     }
 
@@ -82,8 +96,8 @@ public class DefaultSocketServer extends SocketServer<DefaultChannelHandler, Soc
     @SuppressWarnings("Unsafe")
     public void removeChannel(String client) {
         channelHandlers.keySet().forEach(e -> {
-            for (String s : e) {
-                if (s.equals(client)) {
+            for (Address s : e) {
+                if (s.address().equals(client)) {
                     channelHandlers.remove(e);
                     break;
                 }
@@ -103,5 +117,9 @@ public class DefaultSocketServer extends SocketServer<DefaultChannelHandler, Soc
         return "\n+--SocketServer \n|\tport=" + PORT + "; " +
                 "\n|\t(" + macro.toString() + ")" +
                 "\n|\t(" + channelHandlers.toString() + ")";
+    }
+
+    public void setMode(ServerMode serverMode) {
+        this.serverMode = serverMode;
     }
 }

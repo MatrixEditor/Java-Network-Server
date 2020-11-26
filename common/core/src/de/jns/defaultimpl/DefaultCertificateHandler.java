@@ -1,7 +1,9 @@
-package de.jns.io;
+package de.jns.defaultimpl;
 
 import certificate.Certificate;
 import certificate.keys.DataKey;
+import de.jns.io.CertificateHandler;
+import de.jns.io.SocketStream;
 import de.jns.io.submission.Payload;
 import de.jns.monitoring.LoggerFactory;
 
@@ -52,7 +54,7 @@ public class DefaultCertificateHandler extends CertificateHandler<SocketStream> 
 
     @Override
     public Restitution act(Payload input) {
-        LOGGER.log(Level.FINE, "CertificateHandler checked");
+        LOGGER.log(Level.INFO, "CertificateHandler checked");
         return Restitution.CONTINUE;
     }
 
