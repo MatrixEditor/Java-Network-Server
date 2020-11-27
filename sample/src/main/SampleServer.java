@@ -1,8 +1,8 @@
 package main;
 
 
-import de.jns.defaultimpl.DefaultServer;
-import de.jns.ServerMode;
+import de.defaultimpl.DefaultServer;
+import de.server.ServerMode;
 
 /**
  * SampleServer in java.main (Java-Network-Server)
