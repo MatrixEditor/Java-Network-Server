@@ -79,7 +79,7 @@ public class DefaultServer extends Server {
      */
     public void startSocketServer() {
         workerGroup.get(2).open().execAsync(() ->
-                socketServer.start().loop()
+                socketServer.run().loop()
         );
     }
 
@@ -100,7 +100,7 @@ public class DefaultServer extends Server {
         consoleHandler.setListener("default");
     }
 
-    public void consoleAction(String msg) {
+    private void consoleAction(String msg) {
         switch (msg) {
             case "shutdown":
                 shutDown();
@@ -121,6 +121,10 @@ public class DefaultServer extends Server {
                 LOGGER.log(Level.INFO, "Server started");
                 break;
         }
+    }
+
+    public void setActionCommand(String cmd) {
+        consoleHandler.setListener(cmd);
     }
 
 }

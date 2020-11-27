@@ -1,5 +1,6 @@
 package de.defaultimpl;
 
+import de.Factory;
 import de.server.SocketServer;
 import de.annotations.Authors;
 import de.io.SocketStream;
@@ -28,15 +29,11 @@ public class DefaultSocketServer extends SocketServer<Payload, UploadPayload> {
     public DefaultSocketServer(int port) {
         super(port);
         asyncRunner.open();
-        try {
-            serverSocket = new ServerSocket(port);
-        } catch (IOException e) {
-            LOGGER.log(Level.WARNING, "Socket creation failed or invalid port");
-        }
+        serverSocket = Factory.createServerSocket(port);
     }
 
     @Override
-    public SocketServer<Payload, UploadPayload> start() {
+    public SocketServer<Payload, UploadPayload> run() {
         return this;
     }
 

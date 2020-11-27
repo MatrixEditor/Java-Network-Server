@@ -1,6 +1,5 @@
 package de;
 
-import java.io.IOException;
 
 /**
  * Java-Network-Server in de

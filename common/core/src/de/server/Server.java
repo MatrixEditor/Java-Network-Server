@@ -3,6 +3,7 @@ package de.server;
 import de.AsyncRunner;
 import de.ServerRunnable;
 import de.WorkerGroup;
+import de.defaultimpl.DefaultServer;
 import de.monitoring.ConsoleFactory;
 import de.monitoring.ConsoleHandler;
 import de.monitoring.LoggerFactory;
@@ -41,8 +42,6 @@ public abstract class Server {
 
     protected final WorkerGroup<AsyncRunner> workerGroup = new WorkerGroup<>();
 
-    protected final List<ServerRunnable> runnableList = new LinkedList<>();
-
     protected ServerType serverType;
 
     protected ServerMode serverMode;
@@ -67,8 +66,9 @@ public abstract class Server {
 
     public void setMode(ServerMode mode) {serverMode = mode;}
 
-    public void add(ServerRunnable runnable, String command){
+    public Server add(ServerRunnable runnable, String command){
         consoleHandler.addAction(command, runnable);
+        return this;
     }
 
 }

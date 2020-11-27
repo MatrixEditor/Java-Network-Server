@@ -13,5 +13,5 @@ import de.monitoring.ConsoleAction;
  **/
 public interface ServerRunnable extends ConsoleAction {
 
-    ServerRunnable start();
+    ServerRunnable run();
 }

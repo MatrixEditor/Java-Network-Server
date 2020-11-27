@@ -3,6 +3,7 @@ package de;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
@@ -15,6 +16,7 @@ import java.net.Socket;
  * @date 27.11.2020
  **/
 public interface Factory<E> {
+
     E create();
 
     static ObjectOutputStream createOutputStream(Socket socket){
@@ -29,6 +31,15 @@ public interface Factory<E> {
     static ObjectInputStream createInputStream(Socket socket){
         try {
             return new ObjectInputStream(socket.getInputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    static ServerSocket createServerSocket(int port) {
+        try {
+            return new ServerSocket(port);
         } catch (IOException e) {
             e.printStackTrace();
             return null;

@@ -41,7 +41,7 @@ public abstract class SocketServer<I, O> implements ServerRunnable {
         PORT = port;
     }
 
-    public abstract SocketServer<I, O> start();
+    public abstract SocketServer<I, O> run();
 
     public abstract void loop();
 
