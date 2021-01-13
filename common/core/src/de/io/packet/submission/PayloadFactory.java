@@ -1,8 +1,7 @@
-package de.io.submission;
+package de.io.packet.submission;
 
-import certificate.keys.PublicKey;
-import de.monitoring.LoggerFactory;
-import packet.Packet;
+
+import de.api.monitoring.logger.LoggerFactory;
 
 import java.security.SecureRandom;
 import java.util.logging.Logger;
@@ -16,26 +15,12 @@ import java.util.logging.Logger;
  * @version ...
  * @date 26.11.2020
  **/
+@Deprecated
 public class PayloadFactory {
 
     private static final Logger logger = LoggerFactory
             .getLogger(PayloadFactory.class);
 
-
-    public UploadPayload createUpload(int tag, PublicKey publicKey,
-                                      Packet ... packets) {
-        var payload = new UploadPayload(packets);
-        payload.setPublicTag(createPublicTag(tag))
-                .addPublicKey(publicKey);
-        /*
-        try {
-            payload.verify();
-        } catch (IOException e) {
-            logger.log(Level.WARNING, e.getLocalizedMessage());
-        }
-         */
-        return payload;
-    }
 
     private String createPublicTag(int count) {
         SecureRandom secureRandom = new SecureRandom();

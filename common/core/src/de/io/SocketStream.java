@@ -1,7 +1,8 @@
 package de.io;
 
-import de.io.submission.Payload;
-import de.io.submission.UploadPayload;
+
+
+import de.io.packet.submission.Payload;
 import de.monitoring.ExceptionHandler;
 
 import java.io.IOException;
@@ -79,7 +80,7 @@ public class SocketStream implements Stream {
     }
 
     @Override
-    public void out(UploadPayload packet) {
+    public void out(Payload packet) {
         if (open) {
             try {
                 outputStream.writeObject(packet);
@@ -98,5 +99,4 @@ public class SocketStream implements Stream {
     public void handleException() {
         exceptionHandler.onAction();
     }
-
 }

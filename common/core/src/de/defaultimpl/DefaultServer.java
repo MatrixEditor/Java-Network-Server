@@ -1,9 +1,9 @@
 package de.defaultimpl;
 
-import de.*;
-import de.server.Server;
-import de.server.ServerMode;
-import de.server.ServerType;
+import de.api.AsyncRunner;
+import de.api.server.Server;
+import de.api.server.ServerMode;
+import de.api.server.ServerType;
 
 import java.util.logging.Level;
 
@@ -18,8 +18,7 @@ import java.util.logging.Level;
  **/
 public class DefaultServer extends Server {
 
-    private final DefaultSocketServer socketServer;
-
+    private final de.api.impl.DefaultSocketServer socketServer;
     private static final int CONSOLE = 0;
 
     /**
@@ -44,14 +43,14 @@ public class DefaultServer extends Server {
      */
     public DefaultServer(ServerMode nullable, int port, ServerType type) {
         super();
-        this.socketServer = new DefaultSocketServer(port);
+        this.socketServer = new de.api.impl.DefaultSocketServer(port);
         this.serverType = type;
         serverMode = nullable;
     }
 
     /**
      * Here the Server is started. The socketServer is activated,
-     * but not started. In parallel the {@code ConsoleHandler}
+     * but not started. In parallel the {@code HWReaderFrame}
      * waits for input form the console and loops afterwards.
      */
     protected void power_init() {

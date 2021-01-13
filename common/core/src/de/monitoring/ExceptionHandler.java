@@ -1,6 +1,7 @@
 package de.monitoring;
 
-import de.annotations.Authors;
+
+import de.api.annotations.Authors;
 
 /**
  * ExceptionHandler in de.jns.monitoring (Java-Network-Server)

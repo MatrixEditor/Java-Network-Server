@@ -14,11 +14,9 @@ import de.io.channel.ChannelWorker;
  * @version ...
  * @date 26.11.2020
  **/
-public abstract class CertificateHandler<T extends Stream>
-        extends ChannelWorker<T> {
+public abstract class CertificateHandler extends ChannelWorker {
 
     private PublicKey publicKey;
-
     private final String[] knownCertificates;
 
     public CertificateHandler() {
@@ -26,7 +24,6 @@ public abstract class CertificateHandler<T extends Stream>
     }
 
     public CertificateHandler(String[] knownCertificates) {
-
         this.knownCertificates = knownCertificates;
     }
 

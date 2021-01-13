@@ -1,6 +1,5 @@
 package de;
 
-
 import java.io.Closeable;
 import java.util.function.Supplier;
 
@@ -18,6 +17,7 @@ public interface AsyncRunner extends Closeable {
     <E> E supplyAsync(Supplier<E> runnable);
 
     void execAsync(Runnable runnable);
+
 
     boolean isOpen();
 

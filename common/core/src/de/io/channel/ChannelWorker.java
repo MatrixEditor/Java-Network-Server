@@ -1,7 +1,7 @@
 package de.io.channel;
 
-import de.io.submission.Payload;
-import de.io.Stream;
+
+import de.api.network.packet.submission.Payload;
 
 /**
  * ChannelWorker in io (Java-Network-Server)
@@ -12,7 +12,7 @@ import de.io.Stream;
  * @version ...
  * @date 26.11.2020
  **/
-public abstract class ChannelWorker<T extends Stream> {
+public abstract class ChannelWorker {
 
     public enum Restitution {
         STOP,

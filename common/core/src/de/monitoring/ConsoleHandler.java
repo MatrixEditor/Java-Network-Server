@@ -1,8 +1,5 @@
 package de.monitoring;
 
-import de.io.Stream;
-
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -20,15 +17,11 @@ import java.util.logging.Logger;
  **/
 public class ConsoleHandler {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ConsoleHandler.class);
-
+    private final Logger LOGGER = LoggerFactory.getLogger(ConsoleHandler.class);
     private final HashMap<String, ConsoleAction> actionMap = new HashMap<>();
-
     private String msg, cmd;
-
     private boolean open = false;
-
-    private Scanner scanner;
+    public Scanner scanner;
 
     public ConsoleHandler(Scanner scanner,
                           ConsoleAction action, String defaultCommand) {

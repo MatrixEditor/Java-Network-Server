@@ -1,6 +1,9 @@
 package de.io;
 
+
 import de.annotations.Authors;
+
+import java.util.AbstractMap;
 
 /**
  * Address in de.jns.io (Java-Network-Server)
@@ -14,6 +17,6 @@ import de.annotations.Authors;
 @FunctionalInterface
 public interface Address {
 
-    String address();
+    AbstractMap.SimpleEntry<String, String> addressPair();
 
 }

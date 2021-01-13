@@ -1,6 +1,5 @@
 package de.io.channel;
 
-import de.io.Stream;
 
 /**
  * Java-Network-Server in de.io.channel

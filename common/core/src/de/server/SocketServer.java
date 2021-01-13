@@ -1,11 +1,12 @@
 package de.server;
 
-import de.AsyncRunner;
-import de.ServerRunnable;
-import de.defaultimpl.DefaultAsyncRunner;
-import de.io.Address;
-import de.io.channel.IHandler;
-import de.monitoring.LoggerFactory;
+
+import de.api.AsyncRunner;
+import de.api.ServerRunnable;
+import de.api.impl.DefaultAsyncRunner;
+import de.api.monitoring.logger.LoggerFactory;
+import de.api.network.io.Address;
+import de.api.network.io.channel.IHandler;
 
 import java.net.Socket;
 import java.util.HashMap;
@@ -31,13 +32,13 @@ public abstract class SocketServer<I, O> implements ServerRunnable {
      * Pos 0: Server -- Address.
      * Pos 1: Client -- Address.
      */
-    protected final HashMap<Address[], IHandler<I, O>> channelHandlers = new LinkedHashMap<>();
+    protected final HashMap<Address, IHandler<I, O>> channelHandlers = new LinkedHashMap<>();
 
     protected final AsyncRunner asyncRunner = new DefaultAsyncRunner();
 
     protected final int PORT;
 
-    public SocketServer(int port){
+    public SocketServer(int port) {
         PORT = port;
     }
 

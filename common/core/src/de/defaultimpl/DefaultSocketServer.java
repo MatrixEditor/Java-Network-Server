@@ -1,12 +1,12 @@
 package de.defaultimpl;
 
-import de.Factory;
-import de.server.SocketServer;
-import de.annotations.Authors;
-import de.io.SocketStream;
-import de.io.channel.IHandler;
-import de.io.submission.Payload;
-import de.io.submission.UploadPayload;
+
+import de.api.annotations.Authors;
+import de.api.monitoring.Factory;
+import de.api.network.io.SocketStream;
+import de.api.network.io.channel.IHandler;
+import de.api.network.packet.submission.Payload;
+import de.api.server.SocketServer;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -22,9 +22,9 @@ import java.util.logging.Level;
  * @date 26.11.2020
  **/
 @Authors
-public class DefaultSocketServer extends SocketServer<Payload, UploadPayload> {
+public class DefaultSocketServer extends SocketServer<Payload, Payload> {
 
-    private ServerSocket serverSocket;
+    private final ServerSocket serverSocket;
 
     public DefaultSocketServer(int port) {
         super(port);
@@ -33,7 +33,7 @@ public class DefaultSocketServer extends SocketServer<Payload, UploadPayload> {
     }
 
     @Override
-    public SocketServer<Payload, UploadPayload> run() {
+    public SocketServer<Payload, Payload> run() {
         return this;
     }
 
@@ -68,7 +68,7 @@ public class DefaultSocketServer extends SocketServer<Payload, UploadPayload> {
     }
 
     @Override
-    public void erase(IHandler<Payload, UploadPayload> channelHandler) {
+    public void erase(IHandler<Payload, Payload> channelHandler) {
 
     }
 

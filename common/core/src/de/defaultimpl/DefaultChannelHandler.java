@@ -1,12 +1,12 @@
 package de.defaultimpl;
 
+
 import de.annotations.Authors;
 import de.io.Address;
+import de.io.SocketStream;
 import de.io.channel.ChannelHandlerAdapter;
 import de.io.channel.ChannelWorker;
-import de.io.submission.Payload;
-import de.io.SocketStream;
-import de.io.submission.UploadPayload;
+import de.io.packet.submission.Payload;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executors;
@@ -21,7 +21,7 @@ Class description...
 **/
 @Authors
 public class DefaultChannelHandler extends
-        ChannelHandlerAdapter<SocketStream, Payload, UploadPayload> {
+        ChannelHandlerAdapter<SocketStream, Payload, Payload> {
 
     private boolean echo = false;
 
@@ -38,7 +38,7 @@ public class DefaultChannelHandler extends
     }
 
     @Override
-    public ChannelWorker<SocketStream> channel(int pos) {
+    public ChannelWorker channel(int pos) {
         return channels.get(pos);
     }
 
@@ -54,7 +54,11 @@ public class DefaultChannelHandler extends
     @Override
     public void handle(Payload input) {
         System.out.println(input.toString());
-        if (echo) out(payloadFactory.createUpload(5, input.getPublicKey(), input.getPackets()));
+    }
+
+    @Override
+    public void out(Payload out) {
+        stream().out(out);
     }
 
     /**
@@ -88,14 +92,10 @@ public class DefaultChannelHandler extends
         return this;
     }
 
-    public Address[] getAddressees() {
+    public Address getAddressees() {
         return Addressees;
     }
 
-    @Override
-    public void out(UploadPayload p) {
-        stream().out(p);
-    }
 
 }
 

@@ -14,15 +14,15 @@ import java.util.Scanner;
  **/
 public class ConsoleFactory {
 
-    public static ConsoleHandler getEmptyConsoleHandler(InputStream scanner) {
+    public static de.api.monitoring.ConsoleHandler getEmptyConsoleHandler(InputStream scanner) {
         if (scanner != null) {
             return getEmptyConsoleHandler(new Scanner(scanner));
         } else return null;
     }
 
-    public static ConsoleHandler getEmptyConsoleHandler(Scanner scanner) {
+    public static de.api.monitoring.ConsoleHandler getEmptyConsoleHandler(Scanner scanner) {
         if (scanner != null) {
-            return new ConsoleHandler(scanner, null, null);
+            return new de.api.monitoring.ConsoleHandler(scanner, null, null);
         } else return null;
     }
 

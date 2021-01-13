@@ -1,9 +1,10 @@
 package de.io.channel;
 
+
+
 import de.io.Address;
-import de.io.submission.Payload;
 import de.io.Stream;
-import de.io.submission.PayloadFactory;
+import de.io.packet.submission.Payload;
 
 import java.util.ArrayList;
 
@@ -19,12 +20,8 @@ import java.util.ArrayList;
 public abstract class ChannelHandlerAdapter<T extends Stream, I, O>
         implements IHandler<I, O> {
 
-    protected final ArrayList<ChannelWorker<T>> channels = new ArrayList<>();
-
-    protected final PayloadFactory payloadFactory = new PayloadFactory();
-
-    protected final Address[] Addressees = new Address[2];
-
+    protected final ArrayList<ChannelWorker> channels = new ArrayList<>();
+    protected Address Addressees;
     protected final T stream;
 
     protected ChannelHandlerAdapter(T stream) {
@@ -33,11 +30,10 @@ public abstract class ChannelHandlerAdapter<T extends Stream, I, O>
 
     public T stream() {return stream;}
 
-    public abstract ChannelWorker<T> channel(int pos);
+    public abstract ChannelWorker channel(int pos);
 
     public void close() {}
 
     public abstract Payload filter(Payload input, int i);
 
 }
-

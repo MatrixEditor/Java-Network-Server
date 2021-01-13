@@ -15,8 +15,7 @@ import java.util.HashMap;
 public class WorkerGroup<T extends AsyncRunner> {
 
     private static int state = 0;
-
-    private transient final HashMap<Integer, T> OBJECTS = new HashMap<>();
+    private final HashMap<Integer, T> OBJECTS = new HashMap<>();
 
     @SafeVarargs
     public WorkerGroup(T... objects) {
@@ -46,8 +45,9 @@ public class WorkerGroup<T extends AsyncRunner> {
         state = 1;
     }
 
+
     @SafeVarargs
-    private void addAll(T... objects) {
+    private final void addAll(T... objects) {
         int k = 0;
         for (T obj : objects) {
             OBJECTS.put(k, obj);

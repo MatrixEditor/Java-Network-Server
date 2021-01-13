@@ -1,7 +1,7 @@
 package de.io;
 
-import de.io.submission.Payload;
-import de.io.submission.UploadPayload;
+
+import de.io.packet.submission.Payload;
 
 /**
  * Java-Network-Server in io
@@ -58,7 +58,7 @@ public interface Stream {
      * that extends a Packet.
      * @param packet the Object to send out
      */
-    void out(UploadPayload packet);
+    void out(Payload packet);
 
     /**
      * In order to react to a closing event which comes from a ChannelHandler a runnable

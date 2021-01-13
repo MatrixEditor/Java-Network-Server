@@ -1,6 +1,7 @@
 package de.server;
 
-import de.annotations.Authors;
+
+import de.api.annotations.Authors;
 
 /**
  * Java-Network-Server in de.jns

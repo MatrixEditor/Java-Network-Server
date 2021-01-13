@@ -1,15 +1,13 @@
 package de.server;
 
-import de.AsyncRunner;
-import de.ServerRunnable;
-import de.WorkerGroup;
-import de.defaultimpl.DefaultServer;
-import de.monitoring.ConsoleFactory;
-import de.monitoring.ConsoleHandler;
-import de.monitoring.LoggerFactory;
+import de.api.AsyncRunner;
+import de.api.ServerRunnable;
+import de.api.WorkerGroup;
+import de.api.monitoring.ConsoleFactory;
+import de.api.monitoring.ConsoleHandler;
+import de.api.monitoring.logger.LoggerFactory;
 
-import java.util.LinkedList;
-import java.util.List;
+import javax.security.auth.Destroyable;
 import java.util.Random;
 import java.util.logging.Logger;
 
@@ -18,7 +16,7 @@ import java.util.logging.Logger;
  * @version ...
  * @date 26.11.2020
  **/
-public abstract class Server {
+public abstract class Server implements Destroyable {
 
     /**
      * A generated unique String to identify the Server.
@@ -36,14 +34,10 @@ public abstract class Server {
      * The {@link ConsoleHandler} listens for Input at the console
      * and execute a runnable command after getting some message.
      */
-    protected static final ConsoleHandler consoleHandler = ConsoleFactory.getEmptyConsoleHandler(System.in);
-
-    protected static final Logger LOGGER = LoggerFactory.getLogger(Server.class);
-
+    protected final ConsoleHandler consoleHandler = ConsoleFactory.getEmptyConsoleHandler(System.in);
+    protected final Logger LOGGER = LoggerFactory.getLogger(Server.class);
     protected final WorkerGroup<AsyncRunner> workerGroup = new WorkerGroup<>();
-
     protected ServerType serverType;
-
     protected ServerMode serverMode;
 
     /**

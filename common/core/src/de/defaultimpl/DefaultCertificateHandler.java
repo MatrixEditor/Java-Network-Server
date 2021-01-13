@@ -1,12 +1,11 @@
 package de.defaultimpl;
 
-import certificate.Certificate;
-import certificate.keys.DataKey;
-import de.io.CertificateHandler;
-import de.io.SocketStream;
-import de.io.submission.Payload;
-import de.monitoring.LoggerFactory;
 
+import de.api.monitoring.logger.LoggerFactory;
+import de.api.network.io.CertificateHandler;
+import de.api.network.packet.submission.Payload;
+import de.api.security.certificate.Certificate;
+import de.api.security.certificate.keys.DataKey;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,12 +19,10 @@ import java.util.logging.Logger;
  * @version ...
  * @date 26.11.2020
  **/
-public class DefaultCertificateHandler extends CertificateHandler<SocketStream> {
+public class DefaultCertificateHandler extends CertificateHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultCertificateHandler.class);
-
     private Certificate certificate;
-
     private DataKey dataKey;
 
     @Override
